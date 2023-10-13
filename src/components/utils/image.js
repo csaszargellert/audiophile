@@ -4,5 +4,5 @@ export const serializeName = function (productName) {
 
 export const constructImagePath = function (name, category, image) {
   const serializedName = serializeName(name);
-  return `/assets/product-${serializedName}-${category}/${image}`.toLowerCase();
+  return `https://audiophile-api-aq77.onrender.com/assets/product-${serializedName}-${category}/${image}`.toLowerCase();
 };
