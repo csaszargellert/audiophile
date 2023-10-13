@@ -49,15 +49,7 @@ function Product({ product }) {
       <FlexContainer>
         <Features features={product.features} />
       </FlexContainer>
-      {product.gallery.length ? (
-        <ImageGallery
-          gallery={product.gallery}
-          name={product.name}
-          category={product.category}
-        />
-      ) : (
-        ""
-      )}
+      {product.gallery.length ? <ImageGallery gallery={product.gallery} /> : ""}
     </ProductEl>
   );
 }

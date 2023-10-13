@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { useFetcher, json, redirect, useActionData } from "react-router-dom";
+import { useFetcher, json, redirect } from "react-router-dom";
 
 import Portal from "./Portal";
 import ImageContainer from "../components/utils/ImageContainer";
 import { useCart } from "../context/CartContext";
 import { ButtonOrange } from "../components/buttons/Button";
 import NumberInput from "../components/inputs/NumberInput";
-import { constructImagePath } from "../components/utils/image";
 import { axiosPrivate } from "../components/utils/axios";
 
 const ButtonCheckout = styled(ButtonOrange)`
@@ -156,14 +155,14 @@ const NumberInputEl = styled(NumberInput)`
   }
 `;
 
-function CartItem({ name, price, amount, image, category, id }) {
+function CartItem({ name, price, amount, image, id }) {
   const { editProduct, deleteProduct } = useCart();
 
   return (
     <CartItemEl>
       <ButtonDelete onClick={() => deleteProduct(id)}>&times;</ButtonDelete>
       <ImageContainer>
-        <img src={constructImagePath(name, category, image)} alt={name} />
+        <img src={image} alt={name} />
       </ImageContainer>
 
       <div className="detail">
@@ -212,7 +211,6 @@ function Cart() {
                       image={product.image}
                       price={product.price}
                       amount={product.amount}
-                      category={product.category}
                       id={product.id}
                     />
                   );

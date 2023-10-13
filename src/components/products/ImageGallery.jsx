@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
 import Overlay from "../utils/Overlay";
-import { constructImagePath } from "../utils/image";
 
 const Gallery = styled.section`
   ul {
@@ -58,7 +57,7 @@ const ImageContainer = styled.li`
   }
 `;
 
-function ImageGallery({ gallery, name, category }) {
+function ImageGallery({ gallery }) {
   return (
     <Gallery>
       <ul>
@@ -66,7 +65,7 @@ function ImageGallery({ gallery, name, category }) {
           return (
             <ImageContainer key={index} $isLast={index === gallery.length - 1}>
               <Overlay position="absolute" />
-              <img src={constructImagePath(name, category, galleryImage)} />
+              <img src={galleryImage} />
             </ImageContainer>
           );
         })}

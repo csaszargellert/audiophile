@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 import { ButtonOrange } from "../buttons/Button";
 import ImageContainer from "../utils/ImageContainer";
-import { constructImagePath } from "../utils/image";
 
 const Product = styled.figure`
   display: flex;
@@ -103,7 +102,7 @@ function ProductCategory({
   return (
     <Product $isOdd={index % 2}>
       <ImageContainerEl>
-        <img src={constructImagePath(name, category, image)} alt={name} />
+        <img src={image} alt={name} />
       </ImageContainerEl>
       <figcaption>
         {isNew && <NewProduct>new product</NewProduct>}

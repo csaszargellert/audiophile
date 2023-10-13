@@ -48,7 +48,6 @@ function ZPattern({ data }) {
               index={index}
               image={el.image}
               name={el.name}
-              category={el.category}
               id={el.id}
             />
           );

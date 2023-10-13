@@ -6,7 +6,6 @@ import NumberInput from "../inputs/NumberInput";
 import ImageContainer from "../utils/ImageContainer";
 import { useCart } from "../../context/CartContext";
 import { ButtonOrange } from "../buttons/Button";
-import { constructImagePath } from "../utils/image";
 
 const Price = styled.p`
   color: var(--black);
@@ -135,7 +134,7 @@ function ProductSummary({
   return (
     <ProductSummaryEl>
       <ImageContainerEl>
-        <img src={constructImagePath(name, category, image)} alt={name} />
+        <img src={image} alt={name} />
       </ImageContainerEl>
       <figcaption>
         {isNew && <NewProduct>new product</NewProduct>}

@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 import { ButtonBlack } from "../buttons/Button";
 import ImageContainer from "../utils/ImageContainer";
-import { constructImagePath } from "../utils/image";
 
 const ZElementHTML = styled.div`
   --height: 20rem;
@@ -66,11 +65,11 @@ const ProductDetail = styled.div`
   }
 `;
 
-function ZElement({ index, image, name, id, category }) {
+function ZElement({ index, image, name, id }) {
   return (
     <ZElementHTML>
       <ImageContainerEl>
-        <img src={constructImagePath(name, category, image)} alt={name} />
+        <img src={image} alt={name} />
       </ImageContainerEl>
       <ProductDetail $isOdd={index % 2}>
         <div>

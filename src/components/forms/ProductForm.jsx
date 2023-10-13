@@ -40,6 +40,22 @@ const CancelButton = styled(ButtonWithBorder)`
   border-radius: var(--border-radius);
 `;
 
+const convertToDataUrls = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      resolve(reader.result);
+    };
+
+    reader.onerror = (error) => {
+      reject(error);
+    };
+
+    reader.readAsDataURL(file);
+  });
+};
+
 function ProductForm() {
   const data = useLoaderData();
   const error = useActionData();
@@ -56,7 +72,7 @@ function ProductForm() {
     }
   }, [error]);
 
-  const handleSubmit = function (event) {
+  const handleSubmit = async function (event) {
     event.preventDefault();
 
     if (state.isFormValid) {
@@ -65,8 +81,14 @@ function ProductForm() {
       for (const fieldName in state) {
         if (fieldName === "gallery") {
           for (const file of state[fieldName].value) {
-            formData.append(fieldName, file);
+            const url = await convertToDataUrls(file);
+            formData.append(fieldName, url);
           }
+          continue;
+        }
+        if (fieldName === "image" && state[fieldName].value) {
+          const url = await convertToDataUrls(state[fieldName].value);
+          formData.append(fieldName, url);
           continue;
         }
 
@@ -74,7 +96,7 @@ function ProductForm() {
           formData.append(fieldName, state[fieldName].value);
         }
       }
-      submit(formData, { method: "POST", encType: "multipart/form-data" });
+      submit(formData, { method: "POST" });
     } else {
       setProductFormError("You are missing something");
     }

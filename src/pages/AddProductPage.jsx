@@ -49,9 +49,6 @@ export const action = async function ({ request }) {
       method: "POST",
       data: formData,
       url: "/products/create",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
     });
 
     const createdProduct = response.data.data;

@@ -83,9 +83,6 @@ export const action = async function ({ request, params }) {
       method: "PATCH",
       data: formData,
       url: `/products/${productId}`,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
     });
 
     return redirect(`/products/${response.data.data.id}`);
