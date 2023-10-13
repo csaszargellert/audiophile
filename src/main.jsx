@@ -56,6 +56,39 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        path: "logout",
+        action: async function () {
+          try {
+            await AuthProvider.signout();
+            return redirect("/");
+          } catch (error) {
+            if (error.response.status === 401) {
+              return redirect("/");
+            }
+          }
+        },
+      },
+      {
+        path: "unauthorized",
+        element: <UnauthorizedPage />,
+      },
+      {
+        path: "success",
+        element: <SuccessPage />,
+        errorElement: <ErrorPage />,
+        loader: successLoader,
+      },
+      {
+        path: "cancel",
+        element: <CancelPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "checkout",
+        action: checkoutAction,
+        errorElement: <ErrorPage />,
+      },
+      {
         index: true,
         element: <Home />,
         loader: homeLoader,
@@ -112,39 +145,6 @@ const router = createBrowserRouter([
         action: loginAction,
       },
     ],
-  },
-  {
-    path: "/logout",
-    action: async function () {
-      try {
-        await AuthProvider.signout();
-        return redirect("/");
-      } catch (error) {
-        if (error.response.status === 401) {
-          return redirect("/");
-        }
-      }
-    },
-  },
-  {
-    path: "/unauthorized",
-    element: <UnauthorizedPage />,
-  },
-  {
-    path: "/success",
-    element: <SuccessPage />,
-    errorElement: <ErrorPage />,
-    loader: successLoader,
-  },
-  {
-    path: "/cancel",
-    element: <CancelPage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/checkout",
-    action: checkoutAction,
-    errorElement: <ErrorPage />,
   },
 ]);
 
