@@ -42,7 +42,6 @@ const CancelButton = styled(ButtonWithBorder)`
 
 function ProductForm() {
   const data = useLoaderData();
-  console.log(data);
   const error = useActionData();
   const submit = useSubmit();
   const [productFormError, setProductFormError] = useState();

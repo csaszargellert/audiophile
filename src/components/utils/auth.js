@@ -71,7 +71,7 @@ class AuthProvider {
         password,
       },
     });
-    console.log(response);
+
     const { jwt } = response.data;
 
     const { roles, userId, productsId } = this.#decodeJwt(jwt);

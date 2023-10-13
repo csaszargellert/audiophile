@@ -8,7 +8,6 @@ import {
 function ProtectedRoute({ allowedRoles }) {
   const { userIsAuthenticated, userRoles } = useRouteLoaderData("root");
   const location = useLocation();
-  console.log(userIsAuthenticated, userRoles);
   return allowedRoles.every((role) => userRoles?.includes(role)) ? (
     <Outlet />
   ) : userIsAuthenticated ? (

@@ -28,7 +28,6 @@ function useInput(reducer, initialState) {
     } else if (name === "category") {
       isTouched = true;
     }
-    console.log(name, value);
     const { hasError, error } = validateInput(name, value);
     const isFormValid = validateForm(state, name, hasError);
 

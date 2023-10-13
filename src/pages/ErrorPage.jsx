@@ -47,7 +47,6 @@ const ButtonError = styled(ButtonWithBorder)`
 
 function ErrorPage() {
   const error = useRouteError();
-  console.log(error?.message);
   const errorStatus = error?.status || 500;
   const errorMessage = error?.data?.error || error.statusText || error.message;
 

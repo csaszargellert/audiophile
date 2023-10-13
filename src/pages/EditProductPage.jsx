@@ -50,7 +50,6 @@ export const loader = async function ({ params }) {
     const serializedProduct = getDataFrom(product, "EDIT");
     product.Clear();
 
-    console.log(serializedProduct);
     return serializedProduct;
   }
 

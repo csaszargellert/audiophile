@@ -54,7 +54,6 @@ export const loader = async function ({ request }) {
       url: "/success?session_id=" + sessionId,
       method: "GET",
     });
-    console.log(response);
     return response.data;
   } catch (error) {
     throw json(

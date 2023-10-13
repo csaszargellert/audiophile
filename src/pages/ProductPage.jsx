@@ -136,7 +136,6 @@ export const loader = async function ({ params }) {
 
 export const action = async function ({ params, request }) {
   const { productId } = params;
-  console.log(params);
   try {
     await axiosPrivate({
       method: "DELETE",

@@ -185,13 +185,11 @@ function Cart() {
 
   const onSubmit = function (e) {
     e.preventDefault();
-    console.log(products);
 
     const formData = new FormData();
     products.forEach((product) => {
       formData.append("products", JSON.stringify(product));
     });
-    console.log(formData.getAll("products"));
     fetcher.submit(formData, { method: "POST", action: "/checkout" });
   };
 
@@ -237,8 +235,6 @@ function Cart() {
 export default Cart;
 
 export const action = async function ({ request }) {
-  console.log("ACTION");
-  console.log(request);
   const formData = await request.formData();
   const products = formData.getAll("products");
 
@@ -253,7 +249,6 @@ export const action = async function ({ request }) {
     window.location.href = data.data.url;
     return null;
   } catch (error) {
-    console.log(error);
     if (error.response.status === 400) {
       return error.response.data.error;
     }

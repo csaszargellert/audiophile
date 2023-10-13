@@ -47,7 +47,6 @@ function LoginForm() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const from = location.state?.from?.pathname || params.get("from") || "/";
-  console.log(location);
   useEffect(() => {
     if (error) {
       setLoginError(error);

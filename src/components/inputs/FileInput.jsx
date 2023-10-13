@@ -90,7 +90,6 @@ function FileInput({
   const [fileOutput, setFileOutput] = useState(["No file chosen"]);
 
   useEffect(() => {
-    console.log(inputState?.value);
     if (inputState?.value) {
       setIsUploaded(true);
       setCurrentAmount(inputState.value?.length || 1);

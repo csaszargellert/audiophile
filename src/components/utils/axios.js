@@ -22,7 +22,6 @@ const axiosPrivate = axios.create({
 
 axiosPrivate.interceptors.request.use(
   function (config) {
-    console.log(config);
     if (!config.headers.hasAuthorization() && AuthProvider.jwt) {
       config.headers.setAuthorization(`Bearer ${AuthProvider.jwt}`);
     }
@@ -39,7 +38,6 @@ axiosPrivate.interceptors.response.use(
   },
   async function (error) {
     const prevConfig = error.config;
-    console.log(prevConfig);
     if (error.response.status === 403 && !prevConfig._retry) {
       prevConfig._retry = true;
       let newAccessToken = await refreshToken();
