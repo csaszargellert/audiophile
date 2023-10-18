@@ -38,5 +38,5 @@ With a simple and intuitive interface, you can seamlessly browse through a colle
 
 ## Links
 
-*[Live site](https://gellert-audiophile.netlify.app/)
-*[Server-side Code](https://github.com/csaszargellert/audiophile-api)
+* [Live site](https://gellert-audiophile.netlify.app/)
+* [Server-side Code](https://github.com/csaszargellert/audiophile-api)
