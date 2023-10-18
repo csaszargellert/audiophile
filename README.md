@@ -31,10 +31,10 @@ With a simple and intuitive interface, you can seamlessly browse through a colle
 
 ## Built With
 
-* [React](https://react.dev/reference/react)
-* [React Router DOM](https://reactrouter.com/en/main)
-* [Axios](https://axios-http.com/docs/intro)
-* [Stripe](https://stripe.com/docs)
+* React
+* React Router DOM
+* Axios
+* Stripe
 
 ## Links
 
