@@ -7,6 +7,7 @@ function CartContextProvider({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [numItems, setNumItems] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [totalNumberOfItems, setTotalNumberOfItems] = useState(0);
 
   const handleOpen = function () {
     setIsOpen((prev) => !prev);
@@ -80,6 +81,13 @@ function CartContextProvider({ children }) {
     setNumItems(products.length);
   }, [products]);
 
+  useEffect(() => {
+    const totalItems = products.reduce((prevValue, product) => {
+      return prevValue + product.amount;
+    }, 0);
+    setTotalNumberOfItems(totalItems);
+  }, [products]);
+
   const cartValue = {
     addProduct,
     removeAll,
@@ -91,6 +99,7 @@ function CartContextProvider({ children }) {
     totalPrice,
     isOpen,
     products,
+    totalNumberOfItems,
   };
 
   return (

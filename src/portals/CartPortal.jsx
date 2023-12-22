@@ -7,6 +7,8 @@ import { useCart } from "../context/CartContext";
 import { ButtonOrange } from "../components/buttons/Button";
 import NumberInput from "../components/inputs/NumberInput";
 import { axiosPrivate } from "../components/utils/axios";
+import { useToast } from "../context/ToastContext";
+import { TOAST_TYPES } from "../components/utils/constants";
 
 const ButtonCheckout = styled(ButtonOrange)`
   width: 100%;
@@ -98,32 +100,6 @@ const CartEl = styled.div`
   }
 `;
 
-const ButtonDelete = styled.button`
-  border: none;
-  outline: none;
-  background: none;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  transform: translate(-50%, -50%);
-
-  display: grid;
-  width: 2.4rem;
-  height: 2.4rem;
-  place-items: center;
-  background-color: var(--red);
-
-  font-family: inherit;
-  font-size: 2.4rem;
-  line-height: 0;
-  border-radius: var(--border-radius);
-  color: var(--white);
-
-  cursor: pointer;
-`;
-
 const CartItemEl = styled.li`
   display: flex;
   gap: 1.6rem;
@@ -147,6 +123,31 @@ const CartItemEl = styled.li`
   }
 `;
 
+const ButtonDelete = styled.button`
+  border: none;
+  outline: none;
+  background: none;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  transform: translate(-50%, -50%);
+
+  display: grid;
+  width: 2.4rem;
+  height: 2.4rem;
+  place-items: center;
+  background-color: var(--red);
+  border-radius: var(--border-radius);
+
+  .icon-cross {
+    fill: var(--white);
+  }
+
+  cursor: pointer;
+`;
+
 const NumberInputEl = styled(NumberInput)`
   margin-left: auto;
 
@@ -157,10 +158,23 @@ const NumberInputEl = styled(NumberInput)`
 
 function CartItem({ name, price, amount, image, id }) {
   const { editProduct, deleteProduct } = useCart();
+  const { addToast } = useToast();
+
+  const handleClick = function () {
+    deleteProduct(id);
+    addToast({
+      message: "Item removed",
+      type: TOAST_TYPES.SUCCESS,
+    });
+  };
 
   return (
     <CartItemEl>
-      <ButtonDelete onClick={() => deleteProduct(id)}>&times;</ButtonDelete>
+      <ButtonDelete onClick={handleClick}>
+        <svg className="icon icon-cross">
+          <use xlinkHref="/assets/symbol-defs.svg#icon-cross"></use>
+        </svg>
+      </ButtonDelete>
       <ImageContainer>
         <img src={image} alt={name} />
       </ImageContainer>
@@ -181,6 +195,7 @@ function CartItem({ name, price, amount, image, id }) {
 function Cart() {
   const fetcher = useFetcher();
   const { totalPrice, numItems, products, removeAll, handleClose } = useCart();
+  const { addToast } = useToast();
 
   const onSubmit = function (e) {
     e.preventDefault();
@@ -192,13 +207,23 @@ function Cart() {
     fetcher.submit(formData, { method: "POST", action: "/checkout" });
   };
 
+  const handleClick = function () {
+    if (products.length > 0) {
+      removeAll();
+      addToast({
+        message: "All items removed",
+        type: "success",
+      });
+    }
+  };
+
   return (
     <Portal handleClick={handleClose}>
       <PositionContainer>
         <CartEl>
           <header>
             <p>cart ({numItems})</p>
-            <button onClick={removeAll}>Remove all</button>
+            <button onClick={handleClick}>Remove all</button>
           </header>
           <form onSubmit={onSubmit}>
             {products.length ? (

@@ -3,8 +3,14 @@ export const STEP = {
   DECREMENT: "DECREMENT",
 };
 
+export const TOAST_TYPES = {
+  SUCCESS: "success",
+  ERROR: "error",
+};
+
 export const CATEGORY_ENUM = ["speakers", "earphones", "headphones"];
 export const IMAGE_TYPES_ENUM = ["png", "jpeg", "jpg"];
+export const EXCLUDE_PATHS = ["login", "add", "edit"];
 
 export const ACTION = {
   UPDATE_FORM: "UPDATE_FORM",

@@ -6,6 +6,8 @@ import NumberInput from "../inputs/NumberInput";
 import ImageContainer from "../utils/ImageContainer";
 import { useCart } from "../../context/CartContext";
 import { ButtonOrange } from "../buttons/Button";
+import { useToast } from "../../context/ToastContext";
+import { TOAST_TYPES } from "../utils/constants";
 
 const Price = styled.p`
   color: var(--black);
@@ -112,11 +114,12 @@ function ProductSummary({
   const location = useLocation();
   const navigate = useNavigate();
   const { addProduct } = useCart();
+  const { addToast } = useToast();
   const [amount, setAmount] = useState(1);
 
   const handleClick = function () {
-    if (!userIsAuthenticated)
-      return navigate("/login", { state: { from: location }, replace: true });
+    // if (!userIsAuthenticated)
+    //   return navigate("/login", { state: { from: location }, replace: true });
 
     const product = {
       id,
@@ -128,6 +131,10 @@ function ProductSummary({
     };
 
     addProduct(product);
+    addToast({
+      message: `Item added`,
+      type: TOAST_TYPES.SUCCESS,
+    });
     setAmount(1);
   };
 

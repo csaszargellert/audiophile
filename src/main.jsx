@@ -38,6 +38,7 @@ import UnauthorizedPage from "./pages/Unauthorized";
 import SuccessPage, { loader as successLoader } from "./pages/SuccessPage";
 import CancelPage from "./pages/CancelPage";
 import { action as checkoutAction } from "./portals/CartPortal";
+import ToastContextProvider from "./context/ToastContext";
 
 const router = createBrowserRouter([
   {
@@ -151,17 +152,19 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <CartContextProvider>
-      <HamburgerContextProvider>
-        <GlobalStyles />
-        <RouterProvider
-          router={router}
-          fallbackElement={
-            <SpinnerContainer>
-              <CurveBars />
-            </SpinnerContainer>
-          }
-        />
-      </HamburgerContextProvider>
+      <ToastContextProvider>
+        <HamburgerContextProvider>
+          <GlobalStyles />
+          <RouterProvider
+            router={router}
+            fallbackElement={
+              <SpinnerContainer>
+                <CurveBars />
+              </SpinnerContainer>
+            }
+          />
+        </HamburgerContextProvider>
+      </ToastContextProvider>
     </CartContextProvider>
   </React.StrictMode>
 );

@@ -6,8 +6,8 @@ import Footer from "./components/footer/Footer";
 import CallToAction from "./components/cta/Call-To-Action";
 import CurveBars from "./components/spinners/CurveBars";
 import SpinnerContainer from "./components/utils/SpinnerContainer";
-
-const EXCLUDE_PATHS = ["login", "add", "edit"];
+import { EXCLUDE_PATHS } from "./components/utils/constants";
+import ToastNotification from "./portals/ToastNotification";
 
 function App() {
   const location = useLocation();
@@ -44,6 +44,7 @@ function App() {
         </>
       )}
       <Footer />
+      <ToastNotification />
     </>
   );
 }

@@ -80,11 +80,11 @@ function NumberInput({ amount, handleAmount, className }) {
 
   return (
     <InputContainer className={className}>
-      <button data-step={STEP.DECREMENT} onClick={handleClick}>
+      <button data-step={STEP.DECREMENT} onClick={handleClick} type="button">
         -
       </button>
       <Input value={amount || 1} />
-      <button data-step={STEP.INCREMENT} onClick={handleClick}>
+      <button data-step={STEP.INCREMENT} onClick={handleClick} type="button">
         +
       </button>
     </InputContainer>
