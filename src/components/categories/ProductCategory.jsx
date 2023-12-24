@@ -101,7 +101,7 @@ function ProductCategory({
 }) {
   return (
     <Product $isOdd={index % 2}>
-      <ImageContainerEl>
+      <ImageContainerEl id={id}>
         <img src={image} alt={name} />
       </ImageContainerEl>
       <figcaption>

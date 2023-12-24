@@ -8,6 +8,8 @@ export const TOAST_TYPES = {
   ERROR: "error",
 };
 
+export const CHARACTER_COUNT = 250;
+
 export const CATEGORY_ENUM = ["speakers", "earphones", "headphones"];
 export const IMAGE_TYPES_ENUM = ["png", "jpeg", "jpg"];
 export const EXCLUDE_PATHS = ["login", "add", "edit"];

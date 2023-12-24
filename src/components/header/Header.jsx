@@ -11,6 +11,7 @@ import HamburgerPortal from "../../portals/HamburgerPortal";
 import CartPortal from "../../portals/CartPortal";
 import { useHamburger } from "../../context/HamburgerContext";
 import { useCart } from "../../context/CartContext";
+import Favorite from "./Favorite";
 
 const HeaderEl = styled.header`
   padding: 3.2rem 0;
@@ -27,6 +28,12 @@ const FlexContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const IconContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 `;
 
 function Header() {
@@ -81,7 +88,10 @@ function Header() {
           <Hamburger />
           <Logo />
           <Navigation isInHeader />
-          <Cart />
+          <IconContainer>
+            <Favorite />
+            <Cart />
+          </IconContainer>
         </FlexContainer>
       </PaddingContainer>
       {hamburgerIsOpen && <HamburgerPortal headerHeight={headerHeight} />}

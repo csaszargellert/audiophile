@@ -6,6 +6,7 @@ import {
   useFetcher,
   useParams,
   redirect,
+  useLocation,
 } from "react-router-dom";
 
 import {
@@ -17,6 +18,8 @@ import PaddingContainer from "../components/utils/Container";
 import Product from "../components/products/Product";
 import Categories from "../components/categories/Categories";
 import { axiosBase, axiosPrivate } from "../components/utils/axios";
+import AddRating from "../components/comments/AddComment";
+import Comments from "../components/comments/Comments.Jsx";
 
 const GoBack = styled(ButtonGoBack)`
   margin-right: auto;
@@ -71,12 +74,52 @@ const CategoriesContainer = styled.div`
   }
 `;
 
+const RatingsSection = styled.section`
+  padding: 12rem 0 0;
+  color: rgba(0, 0, 0, 0.5);
+
+  h3 {
+    color: var(--black);
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.0857rem;
+    text-transform: uppercase;
+    margin-bottom: 2.4rem;
+  }
+
+  h3 + p {
+    font-size: 1.8rem;
+  }
+
+  @media (min-width: 37.5em) {
+    h3 {
+      font-size: 3.2rem;
+      letter-spacing: 0.11rem;
+      margin-bottom: 3.2rem;
+    }
+  }
+`;
+
+const LoginButton = styled(ButtonGoBack)`
+  &:link,
+  &:visited {
+    color: var(--orange);
+    text-transform: none;
+    font-weight: 700;
+    font-size: inherit;
+  }
+`;
+
 function ProductPage() {
   const product = useLoaderData();
   const { userIsAuthenticated, userRoles, productsId } =
     useRouteLoaderData("root");
   const { productId } = useParams();
   const fetcher = useFetcher();
+  const location = useLocation();
+  const params = new URLSearchParams();
+  params.set("from", location.pathname);
 
   let actionButtons;
   if (
@@ -103,6 +146,20 @@ function ProductPage() {
         {actionButtons}
       </ButtonContainer>
       <Product product={product} />
+
+      <RatingsSection>
+        <h3>ratings</h3>
+        {!userIsAuthenticated ? (
+          <p>
+            {" "}
+            In order to rate this product you have to{" "}
+            <LoginButton to={"/login?" + params.toString()}>log in</LoginButton>
+          </p>
+        ) : (
+          <AddRating productId={productId} />
+        )}
+        <Comments comments={product.comments} />
+      </RatingsSection>
       <CategoriesContainer>
         <Categories />
       </CategoriesContainer>
@@ -135,7 +192,13 @@ export const loader = async function ({ params }) {
 };
 
 export const action = async function ({ params, request }) {
+  const answer = window.confirm("Do you want to delete this product?");
+  if (!answer) {
+    return null;
+  }
+
   const { productId } = params;
+
   try {
     await axiosPrivate({
       method: "DELETE",

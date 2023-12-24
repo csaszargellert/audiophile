@@ -68,7 +68,7 @@ const ProductDetail = styled.div`
 function ZElement({ index, image, name, id }) {
   return (
     <ZElementHTML>
-      <ImageContainerEl>
+      <ImageContainerEl id={id}>
         <img src={image} alt={name} />
       </ImageContainerEl>
       <ProductDetail $isOdd={index % 2}>

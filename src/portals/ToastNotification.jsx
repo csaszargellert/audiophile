@@ -69,6 +69,11 @@ const Toast = styled.div`
     display: grid;
     place-items: center;
   }
+
+  .icon {
+    width: 50%;
+    height: 50%;
+  }
 `;
 
 function ToastNotification() {

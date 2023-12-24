@@ -129,6 +129,7 @@ const ButtonDelete = styled.button`
   background: none;
 
   position: absolute;
+  z-index: 9;
   top: 0;
   left: 0;
 
@@ -143,6 +144,8 @@ const ButtonDelete = styled.button`
 
   .icon-cross {
     fill: var(--white);
+    width: 50%;
+    height: 50%;
   }
 
   cursor: pointer;
@@ -153,6 +156,12 @@ const NumberInputEl = styled(NumberInput)`
 
   button {
     padding: 0.7rem 1.5rem;
+  }
+`;
+
+const CartImage = styled(ImageContainer)`
+  button {
+    display: none;
   }
 `;
 
@@ -175,9 +184,9 @@ function CartItem({ name, price, amount, image, id }) {
           <use xlinkHref="/assets/symbol-defs.svg#icon-cross"></use>
         </svg>
       </ButtonDelete>
-      <ImageContainer>
+      <CartImage>
         <img src={image} alt={name} />
-      </ImageContainer>
+      </CartImage>
 
       <div className="detail">
         <p>{name}</p>

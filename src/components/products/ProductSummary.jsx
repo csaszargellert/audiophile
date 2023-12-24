@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useRouteLoaderData, useNavigate, useLocation } from "react-router";
 
 import NumberInput from "../inputs/NumberInput";
 import ImageContainer from "../utils/ImageContainer";
@@ -110,17 +109,11 @@ function ProductSummary({
   price,
   id,
 }) {
-  const { userIsAuthenticated } = useRouteLoaderData("root");
-  const location = useLocation();
-  const navigate = useNavigate();
   const { addProduct } = useCart();
   const { addToast } = useToast();
   const [amount, setAmount] = useState(1);
 
   const handleClick = function () {
-    // if (!userIsAuthenticated)
-    //   return navigate("/login", { state: { from: location }, replace: true });
-
     const product = {
       id,
       image,
@@ -140,7 +133,7 @@ function ProductSummary({
 
   return (
     <ProductSummaryEl>
-      <ImageContainerEl>
+      <ImageContainerEl id={id}>
         <img src={image} alt={name} />
       </ImageContainerEl>
       <figcaption>

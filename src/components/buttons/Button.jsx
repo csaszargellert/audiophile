@@ -162,10 +162,10 @@ const ButtonArrowEl = styled(Link)`
   }
 `;
 
-export const ButtonArrow = function ({ to, className }) {
+export const ButtonArrow = function ({ to, className, children }) {
   return (
     <ButtonArrowEl className={className} to={to}>
-      <span>shop</span>
+      <span>{children || "shop"}</span>
       <svg width="8" height="12" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M1.322 1l5 5-5 5"
@@ -180,7 +180,20 @@ export const ButtonArrow = function ({ to, className }) {
 };
 
 const GoBackEl = styled(Link)`
-  &:link,
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: inherit;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.66;
+  text-transform: capitalize;
+  text-decoration: none;
+  transition: color var(--transition-duration) var(--transition-timing-function);
+
+  /* &:link,
   &:visited {
     color: rgba(0, 0, 0, 0.5);
     font-family: inherit;
@@ -191,7 +204,7 @@ const GoBackEl = styled(Link)`
     text-decoration: none;
     transition: color var(--transition-duration)
       var(--transition-timing-function);
-  }
+  } */
 
   &:hover,
   &:active {
@@ -199,10 +212,19 @@ const GoBackEl = styled(Link)`
   }
 `;
 
-export const ButtonGoBack = function ({ className }) {
+export const ButtonGoBack = function ({ className, to, children, asEl }) {
+  let href;
+
+  if (to) {
+    href = to;
+  } else if (asEl === "button") {
+    href = null;
+  } else {
+    href = -1;
+  }
   return (
-    <GoBackEl to={-1} className={className}>
-      go back
+    <GoBackEl to={href} className={className} as={asEl}>
+      {children || "go back"}
     </GoBackEl>
   );
 };

@@ -103,6 +103,10 @@ const ImageContainerEl = styled(ImageContainer)`
   width: 100%;
   height: 30rem;
 
+  button {
+    display: none;
+  }
+
   @media (min-width: 56.25em) {
     height: 58.8rem;
     flex: 1 0 45%;

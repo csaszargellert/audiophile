@@ -10,15 +10,15 @@ const globalStyles = createGlobalStyle`
     --grey: #f1f1f1;
     --orange: #D87D4A;
     --light-orange: #fbaf85;
-    --red: rgb(44, 11, 11);
-    --light-red: rgb(244, 199, 199);
+    --red: #CD2C2C;
+    --light-red: #FFC7B0;
     --icon-red: rgb(244, 67, 54);
     --padding: 2.4rem;
     --transition-duration: 150ms;
     --transition-timing-function: ease-in-out;
     --border-radius: 0.8rem;
-    --green: rgb(12, 19, 13);
-    --light-green: rgb(204, 232, 205);
+    --green: rgb(204, 232, 205);
+    --light-green: rgb(12, 19, 13);
     --icon-green: rgb(102, 187, 106);
   }
 
@@ -42,10 +42,10 @@ const globalStyles = createGlobalStyle`
     line-height: 1.4;
   }
 
-  .icon {
+  /* .icon {
     width: 50%;
     height: 50%;
-  }
+  } */
 
   #hamburger {
     position: relative;

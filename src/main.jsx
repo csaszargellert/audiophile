@@ -24,6 +24,7 @@ import ProductPage, {
   loader as productLoader,
   action as deleteProductAction,
 } from "./pages/ProductPage";
+import { action as rateProductAction } from "./components/comments/AddComment";
 import AddProductPage, {
   action as addProductAction,
   loader as loadEnteredData,
@@ -39,6 +40,9 @@ import SuccessPage, { loader as successLoader } from "./pages/SuccessPage";
 import CancelPage from "./pages/CancelPage";
 import { action as checkoutAction } from "./portals/CartPortal";
 import ToastContextProvider from "./context/ToastContext";
+import { action as deleteCommentAction } from "./components/comments/Comment";
+import FavoritesPage, { loader as favoriteLoader } from "./pages/FavoritesPage";
+import FavoriteContextProvider from "./context/FavoritesContext";
 
 const router = createBrowserRouter([
   {
@@ -106,9 +110,10 @@ const router = createBrowserRouter([
             path: ":productId",
             element: <ProductPage />,
             loader: productLoader,
+            action: rateProductAction,
           },
           {
-            element: <ProtectedRoute allowedRoles={["user", "admin"]} />,
+            element: <ProtectedRoute allowedRoles={["admin"]} />,
             children: [
               {
                 path: "add",
@@ -145,6 +150,20 @@ const router = createBrowserRouter([
         element: <Login />,
         action: loginAction,
       },
+      {
+        element: <ProtectedRoute allowedRoles={["user", "admin"]} />,
+        children: [
+          {
+            path: "comment/:commentId",
+            action: deleteCommentAction,
+          },
+        ],
+      },
+      {
+        path: "favorites",
+        element: <FavoritesPage />,
+        loader: favoriteLoader,
+      },
     ],
   },
 ]);
@@ -152,19 +171,21 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <CartContextProvider>
-      <ToastContextProvider>
-        <HamburgerContextProvider>
-          <GlobalStyles />
-          <RouterProvider
-            router={router}
-            fallbackElement={
-              <SpinnerContainer>
-                <CurveBars />
-              </SpinnerContainer>
-            }
-          />
-        </HamburgerContextProvider>
-      </ToastContextProvider>
+      <FavoriteContextProvider>
+        <ToastContextProvider>
+          <HamburgerContextProvider>
+            <GlobalStyles />
+            <RouterProvider
+              router={router}
+              fallbackElement={
+                <SpinnerContainer>
+                  <CurveBars />
+                </SpinnerContainer>
+              }
+            />
+          </HamburgerContextProvider>
+        </ToastContextProvider>
+      </FavoriteContextProvider>
     </CartContextProvider>
   </React.StrictMode>
 );
