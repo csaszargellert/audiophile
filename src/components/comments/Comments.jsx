@@ -26,7 +26,6 @@ const NoRatings = styled.p`
 `;
 
 function Comments({ comments }) {
-  console.log(comments);
   return (
     <CommentsEl>
       {comments.length ? (

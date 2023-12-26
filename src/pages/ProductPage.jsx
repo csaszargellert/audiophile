@@ -158,7 +158,7 @@ function ProductPage() {
         ) : (
           <AddRating productId={productId} />
         )}
-        <Comments comments={product.comments} />
+        <Comments comments={product?.comments} />
       </RatingsSection>
       <CategoriesContainer>
         <Categories />
