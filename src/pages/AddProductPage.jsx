@@ -44,9 +44,13 @@ export default AddProduct;
 
 export const action = async function ({ request }) {
   const formData = await request.formData();
+
   try {
     const response = await axiosPrivate({
       method: "POST",
+      headers: {
+        "Content-Type": "multipart/formdata",
+      },
       data: formData,
       url: "/products/create",
     });

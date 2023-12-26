@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSubmit, useActionData, useLoaderData } from "react-router-dom";
 
 import {
@@ -40,37 +40,15 @@ const CancelButton = styled(ButtonWithBorder)`
   border-radius: var(--border-radius);
 `;
 
-const convertToDataUrls = (file) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      resolve(reader.result);
-    };
-
-    reader.onerror = (error) => {
-      reject(error);
-    };
-
-    reader.readAsDataURL(file);
-  });
-};
-
-function ProductForm() {
+function ProductForm({ mode }) {
   const data = useLoaderData();
   const error = useActionData();
   const submit = useSubmit();
-  const [productFormError, setProductFormError] = useState();
+  const [productFormError, setProductFormError] = useState(error);
   const { state, handleInput } = useInput(
     REDUCER,
     data ? data : INITIAL_PRODUCT_STATE
   );
-
-  useEffect(() => {
-    if (error) {
-      setProductFormError(error);
-    }
-  }, [error]);
 
   const handleSubmit = async function (event) {
     event.preventDefault();
@@ -80,15 +58,9 @@ function ProductForm() {
 
       for (const fieldName in state) {
         if (fieldName === "gallery") {
-          for (const file of state[fieldName].value) {
-            const url = await convertToDataUrls(file);
-            formData.append(fieldName, url);
+          for (const field of state[fieldName].value) {
+            formData.append(fieldName, field);
           }
-          continue;
-        }
-        if (fieldName === "image" && state[fieldName].value) {
-          const url = await convertToDataUrls(state[fieldName].value);
-          formData.append(fieldName, url);
           continue;
         }
 
@@ -96,7 +68,7 @@ function ProductForm() {
           formData.append(fieldName, state[fieldName].value);
         }
       }
-      submit(formData, { method: "POST" });
+      submit(formData, { method: "POST", encType: "multipart/form-data" });
     } else {
       setProductFormError("You are missing something");
     }
@@ -177,7 +149,9 @@ function ProductForm() {
         </FileInput>
       </InputContainer>
       <ButtonController>
-        <SubmitButton asEl="button">add product</SubmitButton>
+        <SubmitButton asEl="button">
+          {mode === "edit" ? "edit" : "add"} product
+        </SubmitButton>
         <CancelButton to={-1}>cancel</CancelButton>
       </ButtonController>
     </Form>

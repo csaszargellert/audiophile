@@ -34,7 +34,7 @@ function EditProduct() {
     <PaddingContainer>
       <Section>
         <FlexContainer>
-          <ProductForm />
+          <ProductForm mode="edit" />
         </FlexContainer>
       </Section>
     </PaddingContainer>
@@ -83,6 +83,9 @@ export const action = async function ({ request, params }) {
       method: "PATCH",
       data: formData,
       url: `/products/${productId}`,
+      headers: {
+        "Content-Type": "multipart/formdata",
+      },
     });
 
     return redirect(`/products/${response.data.data.id}`);
