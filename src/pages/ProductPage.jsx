@@ -19,7 +19,7 @@ import Product from "../components/products/Product";
 import Categories from "../components/categories/Categories";
 import { axiosBase, axiosPrivate } from "../components/utils/axios";
 import AddRating from "../components/comments/AddComment";
-import Comments from "../components/comments/Comments.Jsx";
+import Comments from "../components/comments/Comments";
 
 const GoBack = styled(ButtonGoBack)`
   margin-right: auto;
