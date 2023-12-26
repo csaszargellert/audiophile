@@ -2,7 +2,7 @@ import axios from "axios";
 import AuthProvider from "./auth";
 import refreshToken from "./refreshToken";
 
-const baseURL = "http://localhost:8080/api";
+const baseURL = import.meta.env.VITE_SERVER_URL;
 
 const axiosBase = axios.create({
   baseURL,
