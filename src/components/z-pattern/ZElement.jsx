@@ -69,7 +69,7 @@ function ZElement({ index, image, name, id }) {
   return (
     <ZElementHTML>
       <ImageContainerEl id={id}>
-        <img src={image} alt={name} />
+        <img src={image} loading="lazy" alt={name} />
       </ImageContainerEl>
       <ProductDetail $isOdd={index % 2}>
         <div>

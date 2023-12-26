@@ -87,7 +87,7 @@ function Favorite({ image, name, category, isNew, id }) {
   return (
     <Figure $isDisliked={!checkIsFavorite(id)}>
       <FavoriteImage id={id}>
-        <img src={image} alt={name} />
+        <img src={image} loading="lazy" alt={name} />
       </FavoriteImage>
       <Caption>
         <div>

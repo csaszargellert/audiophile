@@ -102,7 +102,7 @@ function ProductCategory({
   return (
     <Product $isOdd={index % 2}>
       <ImageContainerEl id={id}>
-        <img src={image} alt={name} />
+        <img src={image} loading="lazy" alt={name} />
       </ImageContainerEl>
       <figcaption>
         {isNew && <NewProduct>new product</NewProduct>}

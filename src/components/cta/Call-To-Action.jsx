@@ -122,6 +122,7 @@ function CallToAction() {
             <img
               src="/assets/shared/tablet/image-best-gear.jpg"
               alt="Headphones"
+              loading="lazy"
             />
           </ImageContainerEl>
 
