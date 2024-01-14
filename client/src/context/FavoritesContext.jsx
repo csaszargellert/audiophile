@@ -17,6 +17,7 @@ function FavoriteContextProvider({ children }) {
     setFavorites((prev) => prev.filter((favorite) => favorite !== productId));
     setRemovedFavId(productId);
   };
+
   const clearFavorites = function () {
     setFavorites([]);
     localStorage.removeItem('favorites');
