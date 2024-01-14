@@ -1,12 +1,12 @@
-import { useContext, createContext, useState, useEffect } from "react";
+import { useContext, createContext, useState, useEffect } from 'react';
 
 const FavoriteContext = createContext();
 
 function FavoriteContextProvider({ children }) {
   const [initialRender, setInitialRender] = useState(true);
-  const [removedFavId, setRemovedFavId] = useState("");
+  const [removedFavId, setRemovedFavId] = useState('');
   const [favorites, setFavorites] = useState(
-    JSON.parse(localStorage.getItem("favorites")) || []
+    JSON.parse(localStorage.getItem('favorites')) || []
   );
 
   const addFavorite = function (productId) {
@@ -17,10 +17,9 @@ function FavoriteContextProvider({ children }) {
     setFavorites((prev) => prev.filter((favorite) => favorite !== productId));
     setRemovedFavId(productId);
   };
-
   const clearFavorites = function () {
     setFavorites([]);
-    localStorage.removeItem("favorites");
+    localStorage.removeItem('favorites');
   };
 
   const checkIsFavorite = function (id) {
@@ -29,7 +28,7 @@ function FavoriteContextProvider({ children }) {
 
   useEffect(() => {
     if (!initialRender) {
-      localStorage.setItem("favorites", JSON.stringify(favorites));
+      localStorage.setItem('favorites', JSON.stringify(favorites));
     } else {
       setInitialRender(false);
     }
