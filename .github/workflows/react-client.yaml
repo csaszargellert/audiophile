@@ -9,13 +9,11 @@ on:
       - 'master'
     paths:
       - 'client/**'
+      - 'server/**'
 
 jobs:
   build:
     runs-on: self-hosted
-    defaults:
-      run:
-        working-directory: ./client/
 
     strategy:
       matrix:
@@ -24,7 +22,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: client
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
@@ -34,3 +32,12 @@ jobs:
       - run: npm run build
         env:
           VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
+
+      - name: server
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: './server/package-lock.json'
+      - run: npm ci --omit=dev
+      - run: sudo pm2 restart node-server
