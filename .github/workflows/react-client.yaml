@@ -13,6 +13,9 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: ./client/
 
     strategy:
       matrix:
@@ -26,7 +29,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: cd react-client && npm ci
-      - run: cd react-client && npm run build
+          cache-dependency-path: './client/package-lock.json'
+      - run: npm ci
+      - run: npm run build
         env:
           VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}

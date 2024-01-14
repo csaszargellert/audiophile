@@ -13,6 +13,9 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: ./server/
 
     strategy:
       matrix:
@@ -26,8 +29,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: cd node-server && npm ci
-      - run: cd node-server && npm run build --if-present
+          cache-dependency-path: './server/package-lock.json'
+      - run: npm ci
+      - run: npm run build --if-present
       - run: sudo pm2 restart node-server
         env:
           DB_PASSWORD: ${{secrets.DB_PASSWORD}}
