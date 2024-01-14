@@ -1,10 +1,10 @@
-import { json, useLoaderData } from "react-router-dom";
+import { json, useLoaderData } from 'react-router-dom';
 
-import { axiosBase } from "../components/utils/axios";
-import Hero from "../components/hero/Hero";
-import Categories from "../components/categories/Categories";
-import PaddingContainer from "../components/utils/Container";
-import ZPattern from "../components/z-pattern/ZPattern";
+import { axiosBase } from '../components/utils/axios';
+import Hero from '../components/hero/Hero';
+import Categories from '../components/categories/Categories';
+import PaddingContainer from '../components/utils/Container';
+import ZPattern from '../components/z-pattern/ZPattern';
 
 function Home() {
   const data = useLoaderData();
@@ -12,6 +12,7 @@ function Home() {
   return (
     <>
       <Hero />
+
       <PaddingContainer>
         <Categories />
         <ZPattern data={data} />
@@ -25,8 +26,8 @@ export default Home;
 export const loader = async function () {
   try {
     const response = await axiosBase({
-      method: "GET",
-      url: "/products",
+      method: 'GET',
+      url: '/products',
     });
 
     return response.data.data;
