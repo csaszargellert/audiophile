@@ -1,18 +1,17 @@
-const Comment = require("../models/Comment");
-const Product = require("../models/Product");
-const AppError = require("../utils/AppError");
-const catchAsync = require("../utils/CatchAsync");
+const Comment = require('../models/Comment');
+const Product = require('../models/Product');
+const AppError = require('../utils/AppError');
+const catchAsync = require('../utils/CatchAsync');
 
 const createComment = catchAsync(async function (req, res, next) {
   const { comment, ratings } = req.body;
 
-  if (!comment) throw new AppError("Comment cannot be empty", 400);
-
+  if (!comment) throw new AppError('Comment cannot be empty', 400);
   const { productId } = req.params;
 
   const product = await Product.findById(productId);
 
-  if (!product) throw new AppError("Product not found", 404);
+  if (!product) throw new AppError('Product not found', 404);
 
   const user = req.user;
   const session = req.session;
@@ -51,12 +50,12 @@ const deleteComment = catchAsync(async function (req, res, next) {
 
   const comment = await Comment.findById(commentId);
 
-  if (!comment) throw new AppError("Comment not found", 404);
+  if (!comment) throw new AppError('Comment not found', 404);
 
   const user = req.user;
 
   if (user && user.id !== comment.user.toString())
-    throw new AppError("Not authorized to delete comment", 400);
+    throw new AppError('Not authorized to delete comment', 400);
 
   const session = req.session;
 
@@ -76,7 +75,7 @@ const deleteComment = catchAsync(async function (req, res, next) {
 
     await session.commitTransaction();
 
-    res.status(200).json({ data: "Comment deleted successfully" });
+    res.status(200).json({ data: 'Comment deleted successfully' });
   } catch (error) {
     await session.abortTransaction();
     throw error;
