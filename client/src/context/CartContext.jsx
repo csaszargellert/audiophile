@@ -67,7 +67,6 @@ function CartContextProvider({ children }) {
 
     setProducts(copyProducts);
   };
-
   const removeAll = function () {
     setProducts([]);
   };
