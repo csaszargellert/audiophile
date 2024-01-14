@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <div align="center">
-  <a href="https://github.com/csaszargellert/ticketing">
+  <a href="https://github.com/csaszargellert/audiophile">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
   
@@ -35,7 +35,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<a href="https://audiophile-frontendmentor.xyz"><img src="images/main-page.png"/></a>
+<a href="https://audiophile-frontendmentor.xyz"><img src="images/landing-page.png"/></a>
 <div aling="center">
   <h3 align="center">Audiophile</h3>
   
