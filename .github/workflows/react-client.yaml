@@ -24,11 +24,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            client
-          extensions:
-            partialClone: true
       - name: client
         uses: actions/setup-node@v3
         with:
