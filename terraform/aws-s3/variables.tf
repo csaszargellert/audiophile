@@ -6,7 +6,7 @@ variable "aws_version" {
 
 variable "s3_bucket_name" {
   type = string
-  default = "test-bucket-gellert"
+  default = "test-bucket-qwertzuiop"
 }
 
 variable "iam_policy_name" {
