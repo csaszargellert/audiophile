@@ -9,11 +9,13 @@ on:
       - 'master'
     paths:
       - 'client/**'
-      - 'server/**'
 
 jobs:
   build:
     runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: ./client/
 
     strategy:
       matrix:
@@ -21,7 +23,10 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            client
       - name: client
         uses: actions/setup-node@v3
         with:
@@ -32,12 +37,3 @@ jobs:
       - run: npm run build
         env:
           VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
-
-      - name: server
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-          cache-dependency-path: './server/package-lock.json'
-      - run: npm ci --omit=dev
-      - run: sudo pm2 restart node-server
