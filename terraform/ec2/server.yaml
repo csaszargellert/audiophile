@@ -1,0 +1,19 @@
+#cloud-config
+package_update: true
+package_reboot_if_required: true
+packages:
+  - nginx
+  - nodejs
+  - npm
+
+write_files:
+  - path: /run/scripts/install_pm2.sh
+    content: |
+      #!/bin/bash
+      sudo npm install -g pm2
+    permissions: "0755"
+
+runcmd:
+  - sudo systemctl enable --no-block nginx
+  - sudo systemctl start --no-block nginx
+  - [sh, "/run/scripts/install_pm2.sh"]
