@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import PaddingContainer from "../components/utils/Container";
-import { ButtonBlack } from "../components/buttons/Button";
+import PaddingContainer from '../components/utils/Container';
+import { ButtonBlack } from '../components/buttons/Button';
 
 const FlexContainer = styled.section`
   display: flex;
@@ -29,7 +29,8 @@ function CancelPage() {
       <FlexContainer>
         <div>
           <p>
-            Order <span>canceled</span>
+            Order
+            <span>canceled</span>
           </p>
 
           <ButtonBlack to="/">keep shopping</ButtonBlack>

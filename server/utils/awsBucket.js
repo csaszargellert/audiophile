@@ -3,9 +3,10 @@ const {
   PutObjectCommand,
   DeleteObjectCommand,
   GetObjectCommand,
-} = require("@aws-sdk/client-s3");
-const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
-const { generateRandomImageName } = require("./randomNameGenerator");
+} = require('@aws-sdk/client-s3');
+
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+const { generateRandomImageName } = require('./randomNameGenerator');
 
 const s3Client = new S3Client({
   region: process.env.AWS_S3_REGION,
