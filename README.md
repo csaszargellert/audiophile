@@ -44,6 +44,8 @@
   </p>
 </div>
 
+Live site: [audiophile-frontendmentor.xyz](https://audiophile-frontendmentor.xyz/)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -191,7 +193,6 @@ Gellért Császár - [linkedin/csaszargellert](https://www.linkedin.com/in/gelle
 
 Project Link: [https://github.com/csaszargellert/ticketing](https://github.com/csaszargellert/ticketing)
 
-Live site: [gellert-ticketing.online](https://www.gellert-ticketing.online/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
