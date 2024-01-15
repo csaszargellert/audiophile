@@ -31,4 +31,4 @@ jobs:
           cache: 'npm'
           cache-dependency-path: './server/package-lock.json'
       - run: npm ci --omit=dev
-      - run: sudo pm2 restart node-server
+      - run: sudo pm2 restart node-server --update-env
