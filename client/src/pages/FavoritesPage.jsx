@@ -1,13 +1,13 @@
-import { useLoaderData, json } from "react-router-dom";
-import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useLoaderData, json } from 'react-router-dom';
+import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
-import { axiosBase } from "../components/utils/axios";
-import PaddingContainer from "../components/utils/Container";
-import Favorites from "../components/favorites/Favorites";
-import PageTitle from "../components/PageTitle";
-import Negate from "../components/Negate";
-import { useFavorites } from "../context/FavoritesContext";
+import { axiosBase } from '../components/utils/axios';
+import PaddingContainer from '../components/utils/Container';
+import Favorites from '../components/favorites/Favorites';
+import PageTitle from '../components/PageTitle';
+import Negate from '../components/Negate';
+import { useFavorites } from '../context/FavoritesContext';
 
 const Section = styled.section`
   padding: 0 0 9rem 0;
@@ -48,15 +48,15 @@ function FavoritesPage() {
 export default FavoritesPage;
 
 export const loader = async function () {
-  const favorites = localStorage.getItem("favorites");
-
+  const favorites = localStorage.getItem('favorites');
+  console.log(favorites);
   const searchParams = new URLSearchParams();
-  searchParams.set("favorites", favorites);
+  searchParams.set('favorites', favorites);
 
   try {
     const response = await axiosBase({
-      url: "/products?" + searchParams.toString(),
-      method: "GET",
+      url: '/products?' + searchParams.toString(),
+      method: 'GET',
     });
 
     return response.data.data;

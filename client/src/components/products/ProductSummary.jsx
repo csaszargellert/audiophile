@@ -1,12 +1,11 @@
-import styled from "styled-components";
-import { useState } from "react";
+import styled from 'styled-components';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
-import NumberInput from "../inputs/NumberInput";
-import ImageContainer from "../utils/ImageContainer";
-import { useCart } from "../../context/CartContext";
-import { ButtonOrange } from "../buttons/Button";
-import { useToast } from "../../context/ToastContext";
-import { TOAST_TYPES } from "../utils/constants";
+import NumberInput from '../inputs/NumberInput';
+import ImageContainer from '../utils/ImageContainer';
+import { useCart } from '../../context/CartContext';
+import { ButtonOrange } from '../buttons/Button';
 
 const Price = styled.p`
   color: var(--black);
@@ -110,10 +109,9 @@ function ProductSummary({
   id,
 }) {
   const { addProduct } = useCart();
-  const { addToast } = useToast();
   const [amount, setAmount] = useState(1);
 
-  const handleClick = function () {
+  const notify = () => {
     const product = {
       id,
       image,
@@ -124,10 +122,7 @@ function ProductSummary({
     };
 
     addProduct(product);
-    addToast({
-      message: `Item added`,
-      type: TOAST_TYPES.SUCCESS,
-    });
+    toast.success('Added to cart');
     setAmount(1);
   };
 
@@ -146,7 +141,7 @@ function ProductSummary({
         <Price>${price}</Price>
         <ButtonContainer>
           <NumberInput amount={amount} handleAmount={setAmount} />
-          <ButtonOrange asEl="button" onClick={handleClick}>
+          <ButtonOrange asEl="button" onClick={notify}>
             add to cart
           </ButtonOrange>
         </ButtonContainer>

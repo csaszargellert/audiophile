@@ -8,7 +8,7 @@ function FavoriteContextProvider({ children }) {
   const [favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem('favorites')) || []
   );
-
+  console.log(favorites);
   const addFavorite = function (productId) {
     setFavorites((prev) => [...prev, productId]);
   };

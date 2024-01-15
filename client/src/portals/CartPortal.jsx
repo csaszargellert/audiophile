@@ -1,14 +1,13 @@
-import styled from "styled-components";
-import { useFetcher, json, redirect } from "react-router-dom";
+import styled from 'styled-components';
+import { useFetcher, json, redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import Portal from "./Portal";
-import ImageContainer from "../components/utils/ImageContainer";
-import { useCart } from "../context/CartContext";
-import { ButtonOrange } from "../components/buttons/Button";
-import NumberInput from "../components/inputs/NumberInput";
-import { axiosPrivate } from "../components/utils/axios";
-import { useToast } from "../context/ToastContext";
-import { TOAST_TYPES } from "../components/utils/constants";
+import Portal from './Portal';
+import ImageContainer from '../components/utils/ImageContainer';
+import { useCart } from '../context/CartContext';
+import { ButtonOrange } from '../components/buttons/Button';
+import NumberInput from '../components/inputs/NumberInput';
+import { axiosPrivate } from '../components/utils/axios';
 
 const ButtonCheckout = styled(ButtonOrange)`
   width: 100%;
@@ -167,19 +166,15 @@ const CartImage = styled(ImageContainer)`
 
 function CartItem({ name, price, amount, image, id }) {
   const { editProduct, deleteProduct } = useCart();
-  const { addToast } = useToast();
 
-  const handleClick = function () {
+  const notifiy = () => {
     deleteProduct(id);
-    addToast({
-      message: "Item removed",
-      type: TOAST_TYPES.SUCCESS,
-    });
+    toast.success('Removed from cart');
   };
 
   return (
     <CartItemEl>
-      <ButtonDelete onClick={handleClick}>
+      <ButtonDelete onClick={notifiy}>
         <svg className="icon icon-cross">
           <use xlinkHref="/assets/symbol-defs.svg#icon-cross"></use>
         </svg>
@@ -204,25 +199,21 @@ function CartItem({ name, price, amount, image, id }) {
 function Cart() {
   const fetcher = useFetcher();
   const { totalPrice, numItems, products, removeAll, handleClose } = useCart();
-  const { addToast } = useToast();
 
   const onSubmit = function (e) {
     e.preventDefault();
 
     const formData = new FormData();
     products.forEach((product) => {
-      formData.append("products", JSON.stringify(product));
+      formData.append('products', JSON.stringify(product));
     });
-    fetcher.submit(formData, { method: "POST", action: "/checkout" });
+    fetcher.submit(formData, { method: 'POST', action: '/checkout' });
   };
 
   const handleClick = function () {
     if (products.length > 0) {
       removeAll();
-      addToast({
-        message: "All items removed",
-        type: "success",
-      });
+      toast.success('All removed');
     }
   };
 
@@ -251,7 +242,7 @@ function Cart() {
                 })}
               </ul>
             ) : (
-              ""
+              ''
             )}
             <p className="total">
               total <span>${totalPrice}</span>
@@ -268,13 +259,13 @@ export default Cart;
 
 export const action = async function ({ request }) {
   const formData = await request.formData();
-  const products = formData.getAll("products");
+  const products = formData.getAll('products');
 
   const modProducts = products.map((product) => JSON.parse(product));
   try {
     const data = await axiosPrivate({
-      url: "/stripe/create-checkout-session",
-      method: "PATCH",
+      url: '/stripe/create-checkout-session',
+      method: 'PATCH',
       data: { products: modProducts },
     });
 
@@ -286,7 +277,7 @@ export const action = async function ({ request }) {
     }
 
     if (error.response.status === 401) {
-      return redirect("/login");
+      return redirect('/login');
     }
 
     throw json(

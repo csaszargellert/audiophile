@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import { useState } from "react";
+import styled from 'styled-components';
+import { useState } from 'react';
 
-import { useFavorites } from "../../context/FavoritesContext";
-import { useToast } from "../../context/ToastContext";
-import { TOAST_TYPES } from "./constants";
+import { useFavorites } from '../../context/FavoritesContext';
+
+import { toast } from 'react-toastify';
 
 const ImageContainerEl = styled.div`
   width: 6.4rem;
@@ -57,30 +57,22 @@ const ImageContainerEl = styled.div`
 
 function ImageContainer({ children, className, id }) {
   const { addFavorite, removeFavorite, checkIsFavorite } = useFavorites();
-  const { addToast } = useToast();
   const [isFavorite, setIsFavorite] = useState(checkIsFavorite(id));
-
-  const handleClick = function () {
+  const notify = () => {
     if (!isFavorite) {
       addFavorite(id);
-      addToast({
-        message: `Item liked`,
-        type: TOAST_TYPES.SUCCESS,
-      });
+      toast.success('Added to favorites');
     } else {
       removeFavorite(id);
-      addToast({
-        message: `Item disliked`,
-        type: TOAST_TYPES.SUCCESS,
-      });
+      toast.success('Removed from favorites');
     }
     setIsFavorite((prev) => !prev);
   };
 
   return (
     <ImageContainerEl className={className}>
-      <button onClick={handleClick}>
-        <svg className={`icon icon-heart ${isFavorite && "full"}`}>
+      <button onClick={notify}>
+        <svg className={`icon icon-heart ${isFavorite && 'full'}`}>
           <use xlinkHref="/assets/symbol-defs.svg#icon-heart"></use>
         </svg>
       </button>
