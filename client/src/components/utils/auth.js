@@ -1,5 +1,5 @@
-import { axiosBase, axiosPrivate } from "./axios";
-import jwt_decode from "jwt-decode";
+import { axiosBase, axiosPrivate } from './axios';
+import jwt_decode from 'jwt-decode';
 
 class AuthProvider {
   #jwt = null;
@@ -51,10 +51,10 @@ class AuthProvider {
   async signout() {
     try {
       await axiosPrivate({
-        method: "POST",
-        url: "/auth/signout",
+        method: 'POST',
+        url: '/auth/signout',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
     } finally {
@@ -64,8 +64,8 @@ class AuthProvider {
 
   async signin(email, password) {
     const response = await axiosBase({
-      method: "POST",
-      url: "/auth/signin",
+      method: 'POST',
+      url: '/auth/signin',
       data: {
         email,
         password,
@@ -77,6 +77,19 @@ class AuthProvider {
     const { roles, userId, productsId } = this.#decodeJwt(jwt);
 
     this.#updateFields(jwt, roles, productsId, userId, true);
+  }
+
+  async signup(username, email, password, confirmPassword) {
+    await axiosBase({
+      method: 'POST',
+      url: '/auth/signup',
+      data: {
+        username,
+        email,
+        password,
+        confirmPassword,
+      },
+    });
   }
 
   setJwt(jwt) {

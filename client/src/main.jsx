@@ -34,6 +34,7 @@ import EditProductPage, {
   action as editProductAction,
 } from './pages/EditProductPage';
 import Login, { action as loginAction } from './pages/LoginPage';
+import Register, { action as registerAction } from './pages/RegisterPage';
 import ErrorPage from './pages/ErrorPage';
 import UnauthorizedPage from './pages/Unauthorized';
 import SuccessPage, { loader as successLoader } from './pages/SuccessPage';
@@ -148,6 +149,11 @@ const router = createBrowserRouter([
         path: 'login',
         element: <Login />,
         action: loginAction,
+      },
+      {
+        path: 'register',
+        element: <Register />,
+        action: registerAction,
       },
       {
         element: <ProtectedRoute allowedRoles={['user', 'admin']} />,

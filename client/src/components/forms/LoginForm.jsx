@@ -1,12 +1,17 @@
-import styled from "styled-components";
-import { useLocation, useActionData, Form } from "react-router-dom";
-import { useState, useEffect } from "react";
+import styled from 'styled-components';
+import { useLocation, useActionData, Form } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
-import useInput from "../../hooks/useInput";
-import Input from "../inputs/Input";
-import { ButtonOrange } from "../buttons/Button";
-import { ACTION, INITIAL_LOGIN_STATE, REDUCER } from "../utils/constants";
-import FormError from "./FormError";
+import useInput from '../../hooks/useInput';
+import Input from '../inputs/Input';
+import { ButtonOrange } from '../buttons/Button';
+import { INITIAL_LOGIN_STATE, REDUCER } from '../utils/constants';
+import FormError from './FormError';
+import {
+  MarginTopContainer,
+  ContainerRightAlign,
+  FormChangerButton,
+} from './RegisterForm';
 
 const InputContainer = styled.div`
   display: flex;
@@ -46,7 +51,7 @@ function LoginForm() {
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const from = location.state?.from?.pathname || params.get("from") || "/";
+  const from = location.state?.from?.pathname || params.get('from') || '/';
   useEffect(() => {
     if (error) {
       setLoginError(error);
@@ -83,6 +88,13 @@ function LoginForm() {
       <ButtonLogin asEl="button" disabledEl={!state.isFormValid}>
         Login to your account
       </ButtonLogin>
+      <MarginTopContainer>
+        <ContainerRightAlign>
+          <FormChangerButton to="/register">
+            Don't have account?
+          </FormChangerButton>
+        </ContainerRightAlign>
+      </MarginTopContainer>
     </FormEl>
   );
 }

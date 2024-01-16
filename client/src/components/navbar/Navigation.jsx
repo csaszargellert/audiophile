@@ -1,10 +1,10 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 import {
   Link,
   useRouteLoaderData,
   useFetcher,
   useLocation,
-} from "react-router-dom";
+} from 'react-router-dom';
 
 const NavLink = styled(Link)`
   border: none;
@@ -79,11 +79,11 @@ const NavBar = styled.nav`
 `;
 
 function Navigation({ isInHeader, hamburger }) {
-  const { userIsAuthenticated, userRoles } = useRouteLoaderData("root");
+  const { userIsAuthenticated, userRoles } = useRouteLoaderData('root');
   const fetcher = useFetcher();
   const location = useLocation();
   const params = new URLSearchParams();
-  params.set("from", location.pathname);
+  params.set('from', location.pathname);
 
   return (
     <NavBar $isInHeader={isInHeader} $hamburger={hamburger}>
@@ -100,11 +100,11 @@ function Navigation({ isInHeader, hamburger }) {
 
         {!userIsAuthenticated ? (
           <li>
-            <NavLink to={"/login?" + params.toString()}>login</NavLink>
+            <NavLink to={'/login?' + params.toString()}>login</NavLink>
           </li>
         ) : (
           <>
-            {userRoles.includes("admin") && (
+            {userRoles.includes('admin') && (
               <li>
                 <NavLink to="/products/add">create product</NavLink>
               </li>

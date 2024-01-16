@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
-const InputEl = styled.input`
+export const InputEl = styled.input`
   border: none;
   outline: none;
   background: none;
@@ -25,7 +25,7 @@ const InputEl = styled.input`
     if (props.$bgIsDark) {
       return css`
         border-bottom: 2px solid
-          ${props.$hasError ? "var(--red)" : "currentColor"};
+          ${props.$hasError ? 'var(--red)' : 'currentColor'};
 
         &:focus {
           border-bottom: 2px solid var(--orange);
@@ -34,7 +34,7 @@ const InputEl = styled.input`
     } else {
       return css`
         border: 1px solid
-          ${props.$hasError ? "var(--red)" : "var(--extra-light-grey)"};
+          ${props.$hasError ? 'var(--red)' : 'var(--extra-light-grey)'};
         border-radius: var(--border-radius);
         &:focus {
           border: 1px solid var(--orange);
@@ -57,10 +57,10 @@ const TextArea = styled(InputEl)`
   resize: none;
 `;
 
-const FormInput = styled.div`
+export const FormInput = styled.div`
   position: relative;
 
-  color: ${(props) => (props.$bgIsDark ? "var(--white)" : "var(--black)")};
+  color: ${(props) => (props.$bgIsDark ? 'var(--white)' : 'var(--black)')};
 
   label {
     display: inline-block;
@@ -89,10 +89,10 @@ const FormInput = styled.div`
 
     color: ${(props) =>
       props.$hasError
-        ? "var(--red)"
+        ? 'var(--red)'
         : props.$bgIsDark
-        ? "inherit"
-        : "rgba(0,0,0,0.4)"};
+        ? 'inherit'
+        : 'rgba(0,0,0,0.4)'};
 
     transition: all var(--transition-duration) var(--transition-timing-function);
   }
@@ -137,7 +137,7 @@ function Input({
   bgIsDark,
 }) {
   let input;
-  const isTextArea = type === "textarea";
+  const isTextArea = type === 'textarea';
   if (isTextArea) {
     input = (
       <TextArea
