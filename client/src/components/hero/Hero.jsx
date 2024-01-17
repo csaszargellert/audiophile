@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import PaddingContainer from "../utils/Container";
-import { ButtonOrange } from "../buttons/Button";
+import PaddingContainer from '../utils/Container';
+import { ButtonOrange } from '../buttons/Button';
 
 const HeroEl = styled.section`
   background-color: rgba(16, 16, 16, 0.5);
@@ -119,7 +119,7 @@ function Hero() {
             Experience natural, lifelike audio and exceptional build quality
             made for the passionate music enthusiast.
           </p>
-          <ButtonOrange to={`/products/650f5e35a767392d5df5e1c5`}>
+          <ButtonOrange to={`/products/65a7cca1842b11b8053734f3`}>
             see product
           </ButtonOrange>
         </div>

@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import Product from "./ProductCategory";
+import Product from './ProductCategory';
 
 const ProductsContainer = styled.section`
   display: flex;
@@ -12,6 +12,7 @@ function ProductCategories({ products, category }) {
   return (
     <ProductsContainer>
       {products.map((product, index) => {
+        console.log(product);
         return (
           <Product
             key={product.id}
@@ -22,6 +23,7 @@ function ProductCategories({ products, category }) {
             name={product.name}
             category={category}
             image={product.image}
+            placeholder={product.placeholderImage}
           />
         );
       })}

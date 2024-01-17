@@ -107,6 +107,7 @@ function ProductSummary({
   description,
   price,
   id,
+  placeholder,
 }) {
   const { addProduct } = useCart();
   const [amount, setAmount] = useState(1);
@@ -128,9 +129,12 @@ function ProductSummary({
 
   return (
     <ProductSummaryEl>
-      <ImageContainerEl id={id}>
-        <img src={image} loading="lazy" alt={name} />
-      </ImageContainerEl>
+      <ImageContainerEl
+        id={id}
+        placeholder={placeholder}
+        image={image}
+        name={name}
+      />
       <figcaption>
         {isNew && <NewProduct>new product</NewProduct>}
         <h3>

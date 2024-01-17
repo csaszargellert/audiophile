@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import PaddingContainer from "../utils/Container";
-import ImageContainer from "../utils/ImageContainer";
+import PaddingContainer from '../utils/Container';
+import ImageContainer from '../utils/ImageContainer';
 
 const CTA_El = styled.section`
   margin-bottom: 12rem;
@@ -118,13 +118,10 @@ function CallToAction() {
     <CTA_El>
       <PaddingContainer>
         <figure>
-          <ImageContainerEl>
-            <img
-              src="/assets/shared/tablet/image-best-gear.jpg"
-              alt="Headphones"
-              loading="lazy"
-            />
-          </ImageContainerEl>
+          <ImageContainerEl
+            name="Headphones"
+            image="/assets/shared/tablet/image-best-gear.jpg"
+          />
 
           <figcaption>
             <h3>

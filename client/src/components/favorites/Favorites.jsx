@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import Favorite from "./Favorite";
+import Favorite from './Favorite';
 
 const FavoritesEl = styled.article`
   display: grid;
@@ -35,6 +35,7 @@ function Favorites({ favorites }) {
             image={favorite.image}
             name={favorite.name}
             id={favorite.id}
+            placeholder={favorite.placeholderImage}
           />
         );
       })}

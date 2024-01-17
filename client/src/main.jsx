@@ -18,30 +18,46 @@ import SpinnerContainer from './components/utils/SpinnerContainer';
 import GlobalStyles from './globalStyles';
 
 import App from './App.jsx';
+
 import Home, { loader as homeLoader } from './pages/Home';
+
 import CategoryPage, { loader as categoryLoader } from './pages/CategoryPage';
+
 import ProductPage, {
   loader as productLoader,
   action as deleteProductAction,
 } from './pages/ProductPage';
+
 import { action as rateProductAction } from './components/comments/AddComment';
+
 import AddProductPage, {
   action as addProductAction,
   loader as loadEnteredData,
 } from './pages/AddProductPage';
+
 import EditProductPage, {
   loader as editProductLoader,
   action as editProductAction,
 } from './pages/EditProductPage';
+
 import Login, { action as loginAction } from './pages/LoginPage';
+
 import Register, { action as registerAction } from './pages/RegisterPage';
+
 import ErrorPage from './pages/ErrorPage';
+
 import UnauthorizedPage from './pages/Unauthorized';
+
 import SuccessPage, { loader as successLoader } from './pages/SuccessPage';
+
 import CancelPage from './pages/CancelPage';
+
 import { action as checkoutAction } from './portals/CartPortal';
+
 import { action as deleteCommentAction } from './components/comments/Comment';
+
 import FavoritesPage, { loader as favoriteLoader } from './pages/FavoritesPage';
+
 import FavoriteContextProvider from './context/FavoritesContext';
 
 const router = createBrowserRouter([

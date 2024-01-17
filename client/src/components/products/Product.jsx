@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import Features from "./Features";
-import ImageGallery from "./ImageGallery";
-import ProductSummary from "./ProductSummary";
+import Features from './Features';
+import ImageGallery from './ImageGallery';
+import ProductSummary from './ProductSummary';
 
 const ProductEl = styled.article`
   --gap: 8.8rem;
@@ -45,11 +45,19 @@ function Product({ product }) {
         description={product.description}
         price={product.price}
         id={product.id}
+        placeholder={product.placeholderImage}
       />
       <FlexContainer>
         <Features features={product.features} />
       </FlexContainer>
-      {product.gallery.length ? <ImageGallery gallery={product.gallery} /> : ""}
+      {product.gallery.length ? (
+        <ImageGallery
+          gallery={product.gallery}
+          placeholderGallery={product.placeholderGallery}
+        />
+      ) : (
+        ''
+      )}
     </ProductEl>
   );
 }

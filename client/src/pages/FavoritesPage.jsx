@@ -49,7 +49,7 @@ export default FavoritesPage;
 
 export const loader = async function () {
   const favorites = localStorage.getItem('favorites');
-  console.log(favorites);
+
   const searchParams = new URLSearchParams();
   searchParams.set('favorites', favorites);
 

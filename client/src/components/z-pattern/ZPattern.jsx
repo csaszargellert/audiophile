@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import ZElement from "./ZElement";
+import ZElement from './ZElement';
 
 const ZPatternEl = styled.section`
   margin-block: 12rem;
@@ -22,17 +22,17 @@ const ZPatternEl = styled.section`
 const DUMMY_Z_PATTERN = [
   {
     id: 1,
-    name: "zx9 speaker",
+    name: 'zx9 speaker',
     image: `/assets/product-zx9-speaker/image-product.jpg`,
   },
   {
     id: 2,
-    name: "zx7 speaker",
+    name: 'zx7 speaker',
     image: `/assets/product-zx7-speaker/image-product.jpg`,
   },
   {
     id: 3,
-    name: "yx1 earphones",
+    name: 'yx1 earphones',
     image: `/assets/product-yx1-earphones/image-product.jpg`,
   },
 ];
@@ -42,6 +42,7 @@ function ZPattern({ data }) {
     <ZPatternEl>
       {data.length > 0 &&
         data.map((el, index) => {
+          console.log(el);
           return (
             <ZElement
               key={el.id}
@@ -49,6 +50,7 @@ function ZPattern({ data }) {
               image={el.image}
               name={el.name}
               id={el.id}
+              placeholder={el.placeholderImage}
             />
           );
         })}

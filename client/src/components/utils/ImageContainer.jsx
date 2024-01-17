@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 import { useFavorites } from '../../context/FavoritesContext';
 
@@ -12,11 +12,21 @@ const ImageContainerEl = styled.div`
   overflow: hidden;
   position: relative;
 
+  background-image: url('${(props) => props.$placeholder}');
+  background-size: cover;
+  background-position: center;
+
   img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+  }
+
+  &.loaded > img {
+    opacity: 1;
   }
 
   > button {
@@ -55,9 +65,14 @@ const ImageContainerEl = styled.div`
   }
 `;
 
-function ImageContainer({ children, className, id }) {
+function ImageContainer({ image, className, id, placeholder, name }) {
   const { addFavorite, removeFavorite, checkIsFavorite } = useFavorites();
+
+  const [imageIsLoaded, setImageIsLoaded] = useState(false);
+  const imageRef = useRef();
+
   const [isFavorite, setIsFavorite] = useState(checkIsFavorite(id));
+
   const notify = () => {
     if (!isFavorite) {
       addFavorite(id);
@@ -69,14 +84,33 @@ function ImageContainer({ children, className, id }) {
     setIsFavorite((prev) => !prev);
   };
 
+  const handleOnLoad = function () {
+    setImageIsLoaded(true);
+  };
+
+  useEffect(() => {
+    if (imageRef.current.complete) {
+      handleOnLoad();
+    }
+  }, []);
+
   return (
-    <ImageContainerEl className={className}>
+    <ImageContainerEl
+      className={className + ' ' + `${imageIsLoaded ? 'loaded' : ''}`}
+      $placeholder={placeholder}
+    >
       <button onClick={notify}>
         <svg className={`icon icon-heart ${isFavorite && 'full'}`}>
           <use xlinkHref="/assets/symbol-defs.svg#icon-heart"></use>
         </svg>
       </button>
-      {children}
+      <img
+        ref={imageRef}
+        onLoad={handleOnLoad}
+        src={image}
+        loading="lazy"
+        alt={name}
+      />
     </ImageContainerEl>
   );
 }

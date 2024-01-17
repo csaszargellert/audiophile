@@ -1,6 +1,7 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
+import { useState, useRef, useEffect } from 'react';
 
-import Overlay from "../utils/Overlay";
+import Overlay from '../utils/Overlay';
 
 const Gallery = styled.section`
   ul {
@@ -19,20 +20,30 @@ const Gallery = styled.section`
 
 const ImageContainer = styled.li`
   width: 100%;
-  height: ${(props) => (!props.$isLast ? "20rem" : "36rem")};
+  height: ${(props) => (!props.$isLast ? '20rem' : '36rem')};
   position: relative;
   border-radius: var(--border-radius);
   overflow: hidden;
+
+  background-image: url('${(props) => props.placeholder}');
+  background-size: cover;
+  background-position: center;
 
   img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+  }
+
+  &.loaded > img {
+    opacity: 1;
   }
 
   @media (min-width: 31.25em) {
-    height: ${(props) => (!props.$isLast ? "25rem" : "36rem")};
+    height: ${(props) => (!props.$isLast ? '25rem' : '36rem')};
   }
 
   @media (min-width: 37.5em) {
@@ -57,15 +68,33 @@ const ImageContainer = styled.li`
   }
 `;
 
-function ImageGallery({ gallery }) {
+function ImageGallery({ gallery, placeholderGallery }) {
+  const [imageIsLoaded, setImageIsLoaded] = useState(false);
+  const imageRef = useRef();
+
+  const handleOnLoad = function () {
+    setImageIsLoaded(true);
+  };
+
+  useEffect(() => {
+    if (imageRef.current.complete) {
+      handleOnLoad();
+    }
+  }, []);
+
   return (
     <Gallery>
       <ul>
         {gallery.map((galleryImage, index) => {
           return (
-            <ImageContainer key={index} $isLast={index === gallery.length - 1}>
+            <ImageContainer
+              key={index}
+              $isLast={index === gallery.length - 1}
+              placeholder={placeholderGallery[index]}
+              className={`${imageIsLoaded ? 'loaded' : ''}`}
+            >
               <Overlay position="absolute" />
-              <img src={galleryImage} />
+              <img onLoad={handleOnLoad} ref={imageRef} src={galleryImage} />
             </ImageContainer>
           );
         })}

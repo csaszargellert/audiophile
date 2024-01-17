@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { ButtonOrange } from "../buttons/Button";
-import ImageContainer from "../utils/ImageContainer";
+import { ButtonOrange } from '../buttons/Button';
+import ImageContainer from '../utils/ImageContainer';
 
 const Product = styled.figure`
   display: flex;
@@ -51,7 +51,7 @@ const Product = styled.figure`
       align-items: flex-start;
       text-align: left;
       gap: 3.2rem;
-      order: ${(props) => (props.$isOdd ? "-1" : "0")};
+      order: ${(props) => (props.$isOdd ? '-1' : '0')};
     }
 
     p {
@@ -98,12 +98,16 @@ function ProductCategory({
   isNew,
   id,
   index,
+  placeholder,
 }) {
   return (
     <Product $isOdd={index % 2}>
-      <ImageContainerEl id={id}>
-        <img src={image} loading="lazy" alt={name} />
-      </ImageContainerEl>
+      <ImageContainerEl
+        id={id}
+        name={name}
+        image={image}
+        placeholder={placeholder}
+      />
       <figcaption>
         {isNew && <NewProduct>new product</NewProduct>}
         <h3>

@@ -1,8 +1,8 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
-import ImageContainer from "../utils/ImageContainer";
-import { ButtonArrow } from "../buttons/Button";
-import { useFavorites } from "../../context/FavoritesContext";
+import ImageContainer from '../utils/ImageContainer';
+import { ButtonArrow } from '../buttons/Button';
+import { useFavorites } from '../../context/FavoritesContext';
 
 const FavoriteImage = styled(ImageContainer)`
   width: 100%;
@@ -25,7 +25,7 @@ const FavoriteImage = styled(ImageContainer)`
 
 const Figure = styled.figure`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-  /* display: ${(props) => (props.$isDisliked ? "none" : "block")}; */
+  /* display: ${(props) => (props.$isDisliked ? 'none' : 'block')}; */
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
 `;
@@ -81,14 +81,17 @@ const Caption = styled.figcaption`
   }
 `;
 
-function Favorite({ image, name, category, isNew, id }) {
+function Favorite({ image, name, category, isNew, id, placeholder }) {
   const { checkIsFavorite } = useFavorites();
 
   return (
     <Figure $isDisliked={!checkIsFavorite(id)}>
-      <FavoriteImage id={id}>
-        <img src={image} loading="lazy" alt={name} />
-      </FavoriteImage>
+      <FavoriteImage
+        id={id}
+        image={image}
+        name={name}
+        placeholder={placeholder}
+      />
       <Caption>
         <div>
           <p>{category}</p>

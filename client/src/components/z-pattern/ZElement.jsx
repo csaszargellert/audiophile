@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { ButtonBlack } from "../buttons/Button";
-import ImageContainer from "../utils/ImageContainer";
+import { ButtonBlack } from '../buttons/Button';
+import ImageContainer from '../utils/ImageContainer';
 
 const ZElementHTML = styled.div`
   --height: 20rem;
@@ -61,16 +61,19 @@ const ProductDetail = styled.div`
     padding: 4.2rem;
 
     flex: 1 0 50%;
-    order: ${(props) => (props.$isOdd ? "-1" : "0")};
+    order: ${(props) => (props.$isOdd ? '-1' : '0')};
   }
 `;
 
-function ZElement({ index, image, name, id }) {
+function ZElement({ index, image, name, id, placeholder }) {
   return (
     <ZElementHTML>
-      <ImageContainerEl id={id}>
-        <img src={image} loading="lazy" alt={name} />
-      </ImageContainerEl>
+      <ImageContainerEl
+        id={id}
+        image={image}
+        placeholder={placeholder}
+        name={name}
+      />
       <ProductDetail $isOdd={index % 2}>
         <div>
           <p>{name}</p>
