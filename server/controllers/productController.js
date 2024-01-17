@@ -1,12 +1,12 @@
-const AppError = require("../utils/AppError");
-const Comment = require("../models/Comment");
-const User = require("../models/User");
-const catchAsync = require("../utils/CatchAsync");
-const Product = require("../models/Product");
-const { AwsBucket } = require("../utils/awsBucket");
+const AppError = require('../utils/AppError');
+const Comment = require('../models/Comment');
+const User = require('../models/User');
+const catchAsync = require('../utils/CatchAsync');
+const Product = require('../models/Product');
+const { AwsBucket } = require('../utils/awsBucket');
 
-const getImageKeys = function (fileArray) {
-  return fileArray.map((file) => file.key);
+const createDeletePicturePromises = function (...pictures) {
+  return pictures.map((picture) => AwsBucket.deleteFile(picture));
 };
 
 const getProducts = catchAsync(async function (req, res, next) {
@@ -15,12 +15,20 @@ const getProducts = catchAsync(async function (req, res, next) {
   const query = Product.find();
   if (favorites) {
     const parsedFavorites = JSON.parse(favorites);
-    query.in("_id", parsedFavorites);
+    query.in('_id', parsedFavorites);
   }
-  const products = await query.select("image category name createdAt").exec();
+  const products = await query
+    .select('image category name createdAt placeholderImage')
+    .exec();
 
   for (const product of products) {
-    product.image = await AwsBucket.createSignedUrl(product.image);
+    const imagePromise = AwsBucket.createSignedUrl(product.image);
+    const placeholderImagePromise = AwsBucket.createSignedUrl(
+      product.placeholderImage
+    );
+    const images = await Promise.all([imagePromise, placeholderImagePromise]);
+    product.image = images[0];
+    product.placeholderImage = images[1];
   }
 
   res.status(200).json({ data: products });
@@ -37,8 +45,10 @@ const createProduct = catchAsync(async function (req, res, next) {
     category,
     description,
     price,
-    image: getImageKeys(req.files.image)[0],
-    gallery: getImageKeys(req.files.gallery),
+    image: req.files.image.original[0],
+    placeholderImage: req.files.image.resized[0],
+    gallery: req.files.gallery.original,
+    placeholderGallery: req.files.gallery.resized,
     features,
   });
 
@@ -65,24 +75,41 @@ const getProduct = catchAsync(async function (req, res, next) {
 
   const foundProduct = await Product.findById(productId)
     .populate({
-      path: "comments",
-      select: "comment user ratings createdAt",
+      path: 'comments',
+      select: 'comment user ratings createdAt',
       populate: {
-        path: "user",
-        select: "username",
+        path: 'user',
+        select: 'username',
       },
     })
     .exec();
 
   if (!foundProduct) {
-    throw new AppError("Product not found", 404);
+    throw new AppError('Product not found', 404);
   }
 
-  foundProduct.image = await AwsBucket.createSignedUrl(foundProduct.image);
+  const imagePromise = AwsBucket.createSignedUrl(foundProduct.image);
+  const placeholderImagePromise = AwsBucket.createSignedUrl(
+    foundProduct.placeholderImage
+  );
   const galleryPromises = foundProduct.gallery.map((galleryImage) =>
     AwsBucket.createSignedUrl(galleryImage)
   );
-  foundProduct.gallery = await Promise.all(galleryPromises);
+  const placeholderGalleryPromises = foundProduct.placeholderGallery.map(
+    (galleryImage) => AwsBucket.createSignedUrl(galleryImage)
+  );
+
+  const pictures = await Promise.all([
+    imagePromise,
+    placeholderImagePromise,
+    ...galleryPromises,
+    ...placeholderGalleryPromises,
+  ]);
+
+  foundProduct.image = pictures[0];
+  foundProduct.placeholderImage = pictures[1];
+  foundProduct.gallery = pictures.slice(2, 5);
+  foundProduct.placeholderGallery = pictures.slice(5);
 
   res.status(200).json({ data: foundProduct });
 });
@@ -95,16 +122,19 @@ const deleteProduct = catchAsync(async function (req, res, next) {
   const product = await Product.findById(productId);
 
   if (!product) {
-    throw new AppError("Product not found", 404);
+    throw new AppError('Product not found', 404);
   }
 
-  const pictures = [product.image, ...product.gallery].map((picture) =>
-    AwsBucket.deleteFile(picture)
+  const pictures = createDeletePicturePromises(
+    product.image,
+    product.placeholderImage,
+    ...product.placeholderGallery,
+    ...product.gallery
   );
   const deletePictures = await Promise.all(pictures);
 
   if (!deletePictures.every((picture) => picture.DeleteMarker)) {
-    throw new AppError("Image cannot be deleted", 500);
+    throw new AppError('Image cannot be deleted', 500);
   }
 
   try {
@@ -115,7 +145,7 @@ const deleteProduct = catchAsync(async function (req, res, next) {
       .exec();
 
     if (!deletedProduct) {
-      throw new AppError("Product not found", 404);
+      throw new AppError('Product not found', 404);
     }
 
     const comments = deletedProduct.comments;
@@ -137,7 +167,7 @@ const deleteProduct = catchAsync(async function (req, res, next) {
 
     await session.commitTransaction();
 
-    res.status(200).json({ data: "Product deleted" });
+    res.status(200).json({ data: 'Product deleted' });
   } catch (error) {
     await session.abortTransaction();
     throw error;
@@ -149,25 +179,37 @@ const deleteProduct = catchAsync(async function (req, res, next) {
 const updateProduct = catchAsync(async function (req, res, next) {
   const { productId } = req.params;
   const { name, category, description, price, features } = req.body;
+
   const { image, gallery } = req.files;
 
   const product = await Product.findById(productId);
 
   if (!product) {
-    throw new AppError("Product not found", 404);
+    throw new AppError('Product not found', 404);
   }
 
+  let imagePromises = null;
+
   if (image && gallery) {
-    const imagePromises = [product.image, ...product.gallery].map((picture) =>
-      AwsBucket.deleteFile(picture)
+    imagePromises = createDeletePicturePromises(
+      product.image,
+      product.placeholderImage,
+      ...product.placeholderGallery,
+      ...product.gallery
     );
-    await Promise.all(imagePromises);
   } else if (image) {
-    await AwsBucket.deleteFile(product.image);
-  } else if (gallery) {
-    const imagePromises = product.gallery.map((picture) =>
-      AwsBucket.deleteFile(picture)
+    imagePromises = createDeletePicturePromises(
+      product.image,
+      product.placeholderImage
     );
+  } else if (gallery) {
+    imagePromises = createDeletePicturePromises(
+      product.gallery,
+      product.placeholderGallery
+    );
+  }
+
+  if (imagePromises) {
     await Promise.all(imagePromises);
   }
 
@@ -179,8 +221,10 @@ const updateProduct = catchAsync(async function (req, res, next) {
       description,
       price,
       features,
-      image: image && getImageKeys(req.files.image)[0],
-      gallery: gallery && getImageKeys(req.files.gallery),
+      image: image && req.files.image.original[0],
+      placeholderImage: image && req.files.image.resized[0],
+      gallery: gallery && req.files.gallery.original,
+      placeholderGallery: gallery && req.files.gallery.resized,
     },
     { runValidators: true, new: true }
   );
@@ -193,7 +237,13 @@ const getProductsByCategory = catchAsync(async function (req, res, next) {
   const products = await Product.filterByCategory(slug);
 
   for (const product of products) {
-    product.image = await AwsBucket.createSignedUrl(product.image);
+    const imagePromise = AwsBucket.createSignedUrl(product.image);
+    const placeholderImagePromise = AwsBucket.createSignedUrl(
+      product.placeholderImage
+    );
+    const images = await Promise.all([imagePromise, placeholderImagePromise]);
+    product.image = images[0];
+    product.placeholderImage = images[1];
   }
 
   res.status(200).json({ data: products });

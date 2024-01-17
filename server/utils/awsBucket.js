@@ -20,10 +20,10 @@ class AwsBucket {
 
   constructor() {}
 
-  uploadFile(buffer, type) {
+  uploadFile(buffer, type, randomKey) {
     const awsParams = {
       Bucket: this.#bucket,
-      Key: generateRandomImageName(),
+      Key: randomKey,
       Body: buffer,
       ContentType: type,
     };
