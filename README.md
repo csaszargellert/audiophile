@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <div align="center">
-  <a href="https://github.com/csaszargellert/ticketing">
+  <a href="https://github.com/csaszargellert/audiophile">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
   
@@ -35,7 +35,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<a href="https://audiophile-frontendmentor.xyz"><img src="images/main-page.png"/></a>
+<a href="https://audiophile-frontendmentor.xyz"><img src="images/landing-page.png"/></a>
 <div aling="center">
   <h3 align="center">Audiophile</h3>
   
@@ -43,6 +43,8 @@
     This is an e-commerce website where users can browse through variety of products, like them and add them to carts. Users can leave reviews and ratings about products. Login is required to make a purchase and the integrated Stripe API insures that bank account details remain private and protected.
   </p>
 </div>
+
+Live site: [audiophile-frontendmentor.xyz](https://audiophile-frontendmentor.xyz/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -191,7 +193,6 @@ Gellért Császár - [linkedin/csaszargellert](https://www.linkedin.com/in/gelle
 
 Project Link: [https://github.com/csaszargellert/ticketing](https://github.com/csaszargellert/ticketing)
 
-Live site: [gellert-ticketing.online](https://www.gellert-ticketing.online/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
